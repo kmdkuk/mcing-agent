@@ -40,7 +40,6 @@ validate: setup
 	test -z "$$(gofmt -s -l . | tee /dev/stderr)"
 	staticcheck ./...
 	nilerr ./...
-	test -z "$$(custom-checker -restrictpkg.packages=html/template,log $$(go list -tags='$(GOTAGS)' ./... ) 2>&1 | tee /dev/stderr)"
 	go build ./...
 	go vet ./...
 
@@ -90,13 +89,7 @@ test:
 .PHONY: test
 
 .PHONY: setup
-setup: custom-checker staticcheck nilerr $(PROTOC_BIN) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC) $(PROTOC_GEN_DOC)
-
-.PHONY: custom-checker
-custom-checker:
-	if ! which custom-checker >/dev/null; then \
-		env GOFLAGS= go install github.com/cybozu/neco-containers/golang/analyzer/cmd/custom-checker@latest; \
-	fi
+setup: staticcheck nilerr $(PROTOC_BIN) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC) $(PROTOC_GEN_DOC)
 
 .PHONY: staticcheck
 staticcheck:

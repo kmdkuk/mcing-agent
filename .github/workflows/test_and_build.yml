@@ -20,8 +20,6 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macOS-latest
-          - windows-latest
     steps:
       - name: setup go
         uses: actions/setup-go@v2
@@ -38,10 +36,8 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - name: install lint
-        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.30.0
-      - name: lint
-        run: ./bin/golangci-lint run
+      - name: validate
+        run: make validate
       - name: Ensure go.mod is already tidied
         run: go mod tidy && git diff -s --exit-code go.sum
       - name: build
