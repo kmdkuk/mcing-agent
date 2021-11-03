@@ -22,14 +22,36 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"context"
+	"net"
+	"time"
+
+	"github.com/cybozu-go/well"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
+	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
 	"github.com/kmdkuk/mcing-agent/log"
+	"github.com/kmdkuk/mcing-agent/proto"
+	"github.com/kmdkuk/mcing-agent/server"
 	"github.com/spf13/cobra"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/keepalive"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
 
+const (
+	grpcDefaultAddr = ":9080"
+)
+
 var cfgFile string
+
+var config struct {
+	address string
+}
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -43,7 +65,48 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
+	RunE: func(cmd *cobra.Command, args []string) error {
+		zapLogger, err := zap.NewProduction(zap.AddStacktrace(zapcore.DPanicLevel))
+		if err != nil {
+			return err
+		}
+		defer zapLogger.Sync()
+
+		agent := server.New()
+
+		lis, err := net.Listen("tcp", config.address)
+		if err != nil {
+			return err
+		}
+
+		grpcLogger := zapLogger.Named("grpc")
+		grpcServer := grpc.NewServer(
+			grpc.KeepaliveEnforcementPolicy(keepalive.EnforcementPolicy{
+				MinTime: 10 * time.Second,
+			}),
+			grpc.UnaryInterceptor(
+				grpc_middleware.ChainUnaryServer(
+					grpc_ctxtags.UnaryServerInterceptor(),
+					grpc_zap.UnaryServerInterceptor(grpcLogger),
+				),
+			),
+		)
+		proto.RegisterAgentServer(grpcServer, server.NewAgentService(agent))
+
+		well.Go(func(ctx context.Context) error {
+			return grpcServer.Serve(lis)
+		})
+		well.Go(func(ctx context.Context) error {
+			<-ctx.Done()
+			grpcServer.GracefulStop()
+			return nil
+		})
+
+		if err := well.Wait(); err != nil && !well.IsSignaled(err) {
+			return err
+		}
+		return nil
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -66,6 +129,8 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	fs := rootCmd.Flags()
+	fs.StringVar(&config.address, "address", grpcDefaultAddr, "Listening address and port for gRPC API.")
 }
 
 // initConfig reads in config file and ENV variables if set.

@@ -106,4 +106,7 @@ bin/
 # Local History for Visual Studio Code
 .history/
 
+build/
+include/
+tmp/
 
