@@ -1,4 +1,4 @@
-module github.com/kmdkuk/go-cli-template
+module github.com/kmdkuk/mcing-agent
 
 go 1.14
 

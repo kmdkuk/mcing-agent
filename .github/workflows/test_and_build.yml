@@ -45,7 +45,7 @@ jobs:
       - name: Ensure go.mod is already tidied
         run: go mod tidy && git diff -s --exit-code go.sum
       - name: build
-        run: make bin/go-cli-template
+        run: make bin/mcing-agent
       - name: test
         run: make test
   notification:
