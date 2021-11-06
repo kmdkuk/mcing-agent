@@ -7,7 +7,8 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/itzg/rcon-cli v0.0.0-20210929150847-0a200de910f1
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/spf13/cobra v1.1.3
+	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/spf13/cobra v1.2.1
 	go.uber.org/zap v1.19.1
 	google.golang.org/grpc v1.38.0
 	google.golang.org/protobuf v1.26.0
