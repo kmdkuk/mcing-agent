@@ -2,10 +2,9 @@ package server
 
 import (
 	"context"
-	"os"
 
-	"github.com/itzg/rcon-cli/cli"
 	"github.com/kmdkuk/mcing-agent/proto"
+	"github.com/kmdkuk/mcing-agent/rcon"
 )
 
 func (s agentService) Reload(ctx context.Context, req *proto.ReloadRequest) (*proto.ReloadResponse, error) {
@@ -16,7 +15,6 @@ func (s agentService) Reload(ctx context.Context, req *proto.ReloadRequest) (*pr
 }
 
 func (a *Agent) Reload(ctx context.Context, req *proto.ReloadRequest) error {
-	// TODO: fload env
-	cli.Execute("localhost:25575", "minecraft", os.Stdout, "reload")
+	rcon.Reload()
 	return nil
 }

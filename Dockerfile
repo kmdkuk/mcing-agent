@@ -17,6 +17,6 @@ RUN make bin/mcing-agent
 FROM gcr.io/distroless/static:nonroot
 WORKDIR /
 COPY --from=builder /workspace/bin/mcing-agent .
-USER 65532:65532
+USER 1000:1000
 
 ENTRYPOINT ["/mcing-agent"]
