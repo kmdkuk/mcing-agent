@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+- Fix automatic reload. (#11) 
+
 ## [0.0.2] - 2021-11-06
 
 -  fix build param (#9)

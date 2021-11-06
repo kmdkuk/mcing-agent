@@ -33,6 +33,7 @@ import (
 	"github.com/kmdkuk/mcing-agent/log"
 	"github.com/kmdkuk/mcing-agent/proto"
 	"github.com/kmdkuk/mcing-agent/server"
+	"github.com/kmdkuk/mcing-agent/watcher"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -94,6 +95,10 @@ to quickly create a Cobra application.`,
 			<-ctx.Done()
 			grpcServer.GracefulStop()
 			return nil
+		})
+
+		well.Go(func(ctx context.Context) error {
+			return watcher.Watch(ctx, 10*time.Second)
 		})
 
 		if err := well.Wait(); err != nil && !well.IsSignaled(err) {
