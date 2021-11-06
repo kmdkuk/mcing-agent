@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/cybozu-go/well v1.10.0
-	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
+	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/itzg/rcon-cli v0.0.0-20210929150847-0a200de910f1
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/cobra v1.1.3
