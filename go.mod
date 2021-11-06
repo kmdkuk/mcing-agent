@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/cybozu-go/well v1.10.0
-	github.com/google/go-cmp v0.5.5
+	github.com/google/go-cmp v0.5.6
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/itzg/rcon-cli v0.0.0-20210929150847-0a200de910f1
 	github.com/kr/text v0.2.0 // indirect
