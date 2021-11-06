@@ -79,10 +79,10 @@ $(PROTOC_GEN_DOC):
 	GOBIN=$(PWD)/bin go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@v$(PROTOC_GEN_DOC_VERSION)
 
 bin/mcing-agent: $(BUILD_FILES)
-	go build -trimpath -ldflags "$(GO_LDFLAGS)" -o "$@" .
+	CGO_ENABLED=0 go build -trimpath -ldflags "$(GO_LDFLAGS)" -o "$@" .
 
 dev: $(BUILD_FILES)
-	go build -trimpath -ldflags "$(DEV_LDFLAGS)" -o "bin/mcing-agent-dev" .
+	CGO_ENABLED=0 go build -trimpath -ldflags "$(DEV_LDFLAGS)" -o "bin/mcing-agent-dev" .
 
 test:
 	go test ./...

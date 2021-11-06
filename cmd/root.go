@@ -38,16 +38,11 @@ import (
 	"go.uber.org/zap/zapcore"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
-
-	homedir "github.com/mitchellh/go-homedir"
-	"github.com/spf13/viper"
 )
 
 const (
 	grpcDefaultAddr = ":9080"
 )
-
-var cfgFile string
 
 var config struct {
 	address string
@@ -78,7 +73,6 @@ to quickly create a Cobra application.`,
 		if err != nil {
 			return err
 		}
-
 		grpcLogger := zapLogger.Named("grpc")
 		grpcServer := grpc.NewServer(
 			grpc.KeepaliveEnforcementPolicy(keepalive.EnforcementPolicy{
@@ -118,42 +112,6 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.mcing-agent.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	fs := rootCmd.Flags()
 	fs.StringVar(&config.address, "address", grpcDefaultAddr, "Listening address and port for gRPC API.")
-}
-
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find home directory.
-		home, err := homedir.Dir()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		// Search config in home directory with name ".mcing-agent" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigName(".mcing-agent")
-	}
-
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		log.Error("Using config file:", viper.ConfigFileUsed())
-	}
 }
