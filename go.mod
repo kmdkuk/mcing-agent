@@ -11,7 +11,7 @@ require (
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/cobra v1.2.1
-	go.uber.org/zap v1.19.1
+	go.uber.org/zap v1.21.0
 	golang.org/x/net v0.0.0-20210520170846-37e1c6afe023 // indirect
 	golang.org/x/sys v0.0.0-20210817190340-bfb29a6856f2 // indirect
 	google.golang.org/grpc v1.42.0
