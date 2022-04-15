@@ -6,7 +6,7 @@ require (
 	github.com/cybozu-go/well v1.10.0
 	github.com/google/go-cmp v0.5.7
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
-	github.com/itzg/rcon-cli v0.0.0-20210929150847-0a200de910f1
+	github.com/itzg/rcon-cli v0.0.0-20220415024218-c6b79e00a8e7
 	github.com/kr/text v0.2.0 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/pkg/errors v0.9.1 // indirect
