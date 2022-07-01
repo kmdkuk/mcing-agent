@@ -39,7 +39,6 @@ PROTOC_GEN_DOC_VERSION=1.4.1
 validate: setup
 	test -z "$$(gofmt -s -l . | tee /dev/stderr)"
 	staticcheck ./...
-	nilerr ./...
 	go build ./...
 	go vet ./...
 
@@ -89,18 +88,12 @@ test:
 .PHONY: test
 
 .PHONY: setup
-setup: staticcheck nilerr $(PROTOC_BIN) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC) $(PROTOC_GEN_DOC)
+setup: staticcheck $(PROTOC_BIN) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC) $(PROTOC_GEN_DOC)
 
 .PHONY: staticcheck
 staticcheck:
 	if ! which staticcheck >/dev/null; then \
 		env GOFLAGS= go install honnef.co/go/tools/cmd/staticcheck@latest; \
-	fi
-
-.PHONY: nilerr
-nilerr:
-	if ! which nilerr >/dev/null; then \
-		env GOFLAGS= go install github.com/gostaticanalysis/nilerr/cmd/nilerr@latest; \
 	fi
 
 .PHONY: clean
