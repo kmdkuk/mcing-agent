@@ -9,7 +9,7 @@ require (
 	github.com/itzg/rcon-cli v0.0.0-20220415024218-c6b79e00a8e7
 	github.com/spf13/cobra v1.5.0
 	go.uber.org/zap v1.21.0
-	google.golang.org/grpc v1.47.0
+	google.golang.org/grpc v1.48.0
 	google.golang.org/protobuf v1.28.0
 )
 
