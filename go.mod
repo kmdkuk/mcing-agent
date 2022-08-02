@@ -1,6 +1,6 @@
 module github.com/kmdkuk/mcing-agent
 
-go 1.18
+go 1.19
 
 require (
 	github.com/cybozu-go/well v1.11.0
