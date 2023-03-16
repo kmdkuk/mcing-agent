@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/cybozu-go/well v1.11.1
 	github.com/google/go-cmp v0.5.9
-	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
+	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/itzg/rcon-cli v0.0.0-20220415024218-c6b79e00a8e7
 	github.com/spf13/cobra v1.5.0
 	go.uber.org/zap v1.21.0
