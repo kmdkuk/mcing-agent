@@ -8,7 +8,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/itzg/rcon-cli v0.0.0-20220415024218-c6b79e00a8e7
 	github.com/spf13/cobra v1.5.0
-	go.uber.org/zap v1.21.0
+	go.uber.org/zap v1.26.0
 	google.golang.org/grpc v1.47.0
 	google.golang.org/protobuf v1.28.1
 )
@@ -35,8 +35,7 @@ require (
 	github.com/subosito/gotenv v1.4.0 // indirect
 	github.com/vishvananda/netlink v1.1.0 // indirect
 	github.com/vishvananda/netns v0.0.0-20211101163701-50045581ed74 // indirect
-	go.uber.org/atomic v1.9.0 // indirect
-	go.uber.org/multierr v1.8.0 // indirect
+	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/net v0.0.0-20220826154423-83b083e8dc8b // indirect
 	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
 	golang.org/x/text v0.3.7 // indirect
