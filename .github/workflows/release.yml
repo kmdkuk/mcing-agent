@@ -11,7 +11,7 @@ jobs:
     needs: image
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-go@v3
         with:
           go-version: ${{ env.go-version }}
@@ -50,7 +50,7 @@ jobs:
     name: Push Container Image
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Login to ghcr.io
         run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
       - run: docker build -t ghcr.io/kmdkuk/mcing-agent:${GITHUB_REF#refs/tags/v} .
